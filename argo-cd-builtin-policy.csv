@@ -2,45 +2,45 @@
 # and additionally assigns the admin user to the role:admin role.
 # There are two policy formats:
 # 1. Applications, logs, and exec (which belong to a project):
-# p, <user/group>, <resource>, <action>, <project>/<object>
+# p, <user/group>, <domain>, <resource>, <action>, <project>/<object>
 # 2. All other resources:
-# p, <user/group>, <resource>, <action>, <object>
+# p, <user/group>, <domain>, <resource>, <action>, <object>
 
-p, role:readonly, applications, get, */*, allow
-p, role:readonly, certificates, get, *, allow
-p, role:readonly, clusters, get, *, allow
-p, role:readonly, repositories, get, *, allow
-p, role:readonly, projects, get, *, allow
-p, role:readonly, accounts, get, *, allow
-p, role:readonly, gpgkeys, get, *, allow
-p, role:readonly, logs, get, */*, allow
+p, role:readonly, domain1, applications, get, */*, allow
+p, role:readonly, domain1, certificates, get, *, allow
+p, role:readonly, domain1, clusters, get, *, allow
+p, role:readonly, domain1, repositories, get, *, allow
+p, role:readonly, domain1, projects, get, *, allow
+p, role:readonly, domain1, accounts, get, *, allow
+p, role:readonly, domain1, gpgkeys, get, *, allow
+p, role:readonly, domain1, logs, get, */*, allow
 
-p, role:admin, applications, create, */*, allow
-p, role:admin, applications, update, */*, allow
-p, role:admin, applications, delete, */*, allow
-p, role:admin, applications, sync, */*, allow
-p, role:admin, applications, override, */*, allow
-p, role:admin, applications, action/*, */*, allow
-p, role:admin, applicationsets, get, */*, allow
-p, role:admin, applicationsets, create, */*, allow
-p, role:admin, applicationsets, update, */*, allow
-p, role:admin, applicationsets, delete, */*, allow
-p, role:admin, certificates, create, *, allow
-p, role:admin, certificates, update, *, allow
-p, role:admin, certificates, delete, *, allow
-p, role:admin, clusters, create, *, allow
-p, role:admin, clusters, update, *, allow
-p, role:admin, clusters, delete, *, allow
-p, role:admin, repositories, create, *, allow
-p, role:admin, repositories, update, *, allow
-p, role:admin, repositories, delete, *, allow
-p, role:admin, projects, create, *, allow
-p, role:admin, projects, update, *, allow
-p, role:admin, projects, delete, *, allow
-p, role:admin, accounts, update, *, allow
-p, role:admin, gpgkeys, create, *, allow
-p, role:admin, gpgkeys, delete, *, allow
-p, role:admin, exec, create, */*, allow
+p, role:admin, domain1, applications, create, */*, allow
+p, role:admin, domain1, applications, update, */*, allow
+p, role:admin, domain1, applications, delete, */*, allow
+p, role:admin, domain1, applications, sync, */*, allow
+p, role:admin, domain1, applications, override, */*, allow
+p, role:admin, domain1, applications, action/*, */*, allow
+p, role:admin, domain1, applicationsets, get, */*, allow
+p, role:admin, domain1, applicationsets, create, */*, allow
+p, role:admin, domain1, applicationsets, update, */*, allow
+p, role:admin, domain1, applicationsets, delete, */*, allow
+p, role:admin, domain1, certificates, create, *, allow
+p, role:admin, domain1, certificates, update, *, allow
+p, role:admin, domain1, certificates, delete, *, allow
+p, role:admin, domain1, clusters, create, *, allow
+p, role:admin, domain1, clusters, update, *, allow
+p, role:admin, domain1, clusters, delete, *, allow
+p, role:admin, domain1, repositories, create, *, allow
+p, role:admin, domain1, repositories, update, *, allow
+p, role:admin, domain1, repositories, delete, *, allow
+p, role:admin, domain1, projects, create, *, allow
+p, role:admin, domain1, projects, update, *, allow
+p, role:admin, domain1, projects, delete, *, allow
+p, role:admin, domain1, accounts, update, *, allow
+p, role:admin, domain1, gpgkeys, create, *, allow
+p, role:admin, domain1, gpgkeys, delete, *, allow
+p, role:admin, domain1, exec, create, */*, allow
 
-g, role:admin, role:readonly
-g, admin, role:admin
+g, role:admin, role:readonly, domain1
+g, admin, role:admin, domain1

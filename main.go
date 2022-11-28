@@ -43,7 +43,7 @@ func main() {
 	groupingPolicy := e.GetGroupingPolicy()
 	log.Println(groupingPolicy)
 
-	ok, err := e.Enforce("admin", "applications", "get", "foo/bar")
+	ok, err := e.Enforce("admin", "domain1", "applications", "get", "foo/bar")
 	check(err)
 	log.Printf("Result: %v", ok)
 }
