@@ -3,9 +3,16 @@ package main
 import (
 	"log"
 
-	"github.com/argoproj/argo-cd/v2/util/glob"
+	"github.com/gobwas/glob"
+
 	"github.com/casbin/casbin/v2"
+	"github.com/casbin/casbin/v2/model"
 	fileadapter "github.com/casbin/casbin/v2/persist/file-adapter"
+)
+
+const (
+	modelFile  = "argo-cd-model.conf"
+	policyFile = "argo-cd-builtin-policy.csv"
 )
 
 func check(err error) {
@@ -29,15 +36,38 @@ func globMatchFunc(args ...interface{}) (interface{}, error) {
 		return false, nil
 	}
 
-	return glob.Match(pattern, val), nil
+	return Match(pattern, val), nil
+}
+
+func Match(pattern, text string, separators ...rune) bool {
+	compiledGlob, err := glob.Compile(pattern, separators...)
+	if err != nil {
+		log.Printf("failed to compile pattern %s due to error %v", pattern, err)
+		return false
+	}
+	return compiledGlob.Match(text)
 }
 
 func main() {
-	adapter := fileadapter.NewAdapter("argo-cd-builtin-policy.csv")
-	e, err := casbin.NewEnforcer("argo-cd-model.conf", adapter)
+	a := fileadapter.NewFilteredAdapter(policyFile)
+
+	m, err := model.NewModelFromFile(modelFile)
+	check(err)
+
+	e, err := casbin.NewEnforcer(m, a)
 	check(err)
 
 	e.AddFunction("globOrRegexMatch", globMatchFunc)
+
+	// Sample filter which only loads one domain.
+	domain1 := "domain1"
+	f := fileadapter.Filter{
+		P: []string{"", domain1},
+		G: []string{"", "", domain1},
+	}
+
+	err = e.LoadFilteredPolicy(&f)
+	check(err)
 
 	allSubjects := e.GetAllSubjects()
 	log.Println("--> GetAllSubjects()")
